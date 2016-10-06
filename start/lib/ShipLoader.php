@@ -27,7 +27,7 @@ class ShipLoader {
         $ship4 = new Ship('Exploding Yoda');
         $ship4->setWeaponPower(3);
         $ship4->setJediFactor(90000);
-        $ship4->setStrength(700);
+        $ship4->setStrength(600);
 
         $ships['Exploding Yodas'] =$ship4;
 
