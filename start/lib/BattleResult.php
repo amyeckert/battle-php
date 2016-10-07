@@ -10,7 +10,7 @@ class BattleResult
 	private $losingShip;
 
 								//type hinting- put type of thing to be returned in the paramaters.
-	public function __construct($usedJediPowers, Ship $winningShip, Ship $losingShip) 
+	public function __construct($usedJediPowers, Ship $winningShip = null, Ship $losingShip) 
 	{
 			$this->usedJediPowers = $usedJediPowers; //boolean
 			$this->winningShip = $winningShip; //object
@@ -26,7 +26,10 @@ class BattleResult
 	}
 	public function getLosingShip() {
 		return $this->losingShip;
-	}	
+	}
+	public function isThereAWinner() {
+		return $this->getWinningShip() !== NULL;
+	} //returns a ship object only if it is not null.	
 }
 
 ?>

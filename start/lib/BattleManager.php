@@ -31,6 +31,11 @@ class BattleManager {
             $ship2Health = $ship2Health - ($ship1->getWeaponPower() * $ship1Quantity);
         }
 
+        $ship1->setStrength($ship1Health); // after the battle, set ship1's current strength to ship's Health. 
+        $ship2->setStrength($ship2Health);
+
+
+
         if ($ship1Health <= 0 && $ship2Health <= 0) {
             // they destroyed each other
             $winningShip = null;

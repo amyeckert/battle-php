@@ -2,6 +2,7 @@
 
 class Ship {
 	//properties
+	private $id;
 	private $name = '';
 	private $weaponPower = 0;
 	private $jediFactor = 0;
@@ -53,6 +54,9 @@ class Ship {
 	public function setName($name) {
 		$this->name = $name;
 	}
+	public function setId($id) {
+		$this->id = $id;
+	}
 	public function setWeaponPower($weaponPower) {
 		$this->weaponPower = $weaponPower;	
 	}
@@ -67,7 +71,9 @@ class Ship {
 	}
 
 	//use a get function to get the value of the set properties.
-	
+	public function getId() {
+		return $this->$id;
+	}
 	public function getWeaponPower() {
 		return $this->weaponPower;
 	}
@@ -77,6 +83,7 @@ class Ship {
 	public function getStrength() {
 		return $this->strength;
 	}
+	
 } 
 
 

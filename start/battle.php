@@ -1,35 +1,36 @@
 <?php
 require __DIR__.'/bootstrap.php';
 
-//instansiate new service classes so you can use them:
+//instantiate new service classes so you can use them:
 $shipLoader = new ShipLoader();
 $ships = $shipLoader->getShips();
 
-
-$ship1Name = isset($_POST['ship1_name']) ? $_POST['ship1_name'] : null;
+// create variables to get the name and amount of ships chosen to battle in form on index.php 
+$ship1Id = isset($_POST['ship1_id']) ? $_POST['ship1_id'] : null;
 $ship1Quantity = isset($_POST['ship1_quantity']) ? $_POST['ship1_quantity'] : 1;
-$ship2Name = isset($_POST['ship2_name']) ? $_POST['ship2_name'] : null;
+$ship2Id = isset($_POST['ship2_id']) ? $_POST['ship2_id'] : null;
 $ship2Quantity = isset($_POST['ship2_quantity']) ? $_POST['ship2_quantity'] : 1;
 
+$ship1 = $shipLoader->findOneById($ship1Id);
+$ship2 = $shipLoader->findOneById($ship2Id);
 
-// 
-if (!$ship1Name || !$ship2Name) {
+// if no ship name is entered, die.
+if (!$ship1Id || !$ship2Id) {
     header('Location: /index.php?error=missing_data');
     die;
 }
-
-if (!isset($ships[$ship1Name]) || !isset($ships[$ship2Name])) {
+// if ship name is not in array? die.
+if (!isset($ships[$ship1Id]) || !isset($ships[$ship2Id])) {
     header('Location: /index.php?error=bad_ships');
     die;
 }
-
+// if no quantity is entered, die.
 if ($ship1Quantity <= 0 || $ship2Quantity <= 0) {
     header('Location: /index.php?error=bad_quantities');
     die;
 }
 
-$ship1 = $ships[$ship1Name];
-$ship2 = $ships[$ship2Name];
+
 
 // creat a new balttle manager object
 $battleManager = new BattleManager();
@@ -76,17 +77,17 @@ $battleResult = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Qua
             <div class="result-box center-block">
                 <h3 class="text-center audiowide">
                     Winner:
-                    <?php if ($battleResult->getWinningShip()): ?>
+                    <?php if ($battleResult->isThereAWinner()): ?>
                         <?php echo $battleResult->getWinningShip()->getName(); ?>
                     <?php else: ?>
                         Nobody
                     <?php endif; ?>
                 </h3>
                 <p class="text-center">
-                    <?php if ($battleResult == null): ?>
+                    <?php if (!$battleResult->isThereAWinner()): ?> <!-- if there is not a winner-->
                         Both ships destroyed each other in an epic battle to the end.
                     <?php else: ?>
-                        The <?php echo $battleResult->getWinningShip()->getName(); ?>
+                        The <?php echo $battleResult->getWinningShip()->getName(); ?> <!-- if there is a winner-->
                         <?php if ($battleResult->wereJediPowersUsed()): ?>
                             used its Jedi Powers for a stunning victory!
                         <?php else: ?>
@@ -94,6 +95,19 @@ $battleResult = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Qua
                         <?php endif; ?>
                     <?php endif; ?>
                 </p>
+
+                <h4>Current Ship Health</h4>
+                <dl class="dl-horizontal">
+                    <dt><?php echo $ship1->getName(); ?></dt>
+                    <dd><?php echo $ship1->getStrength(); ?></dd>
+                    <dt><?php echo $ship2->getName(); ?></dt>
+                    <dd><?php echo $ship2->getStrength(); ?></dd>
+                </dl>
+
+
+
+
+
             </div>
             <a href="/index.php"><p class="text-center"><i class="fa fa-undo"></i> Battle again</p></a>
         
