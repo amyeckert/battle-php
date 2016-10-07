@@ -72,7 +72,7 @@ class Ship {
 
 	//use a get function to get the value of the set properties.
 	public function getId() {
-		return $this->$id;
+		return 5;
 	}
 	public function getWeaponPower() {
 		return $this->weaponPower;

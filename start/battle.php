@@ -11,14 +11,18 @@ $ship1Quantity = isset($_POST['ship1_quantity']) ? $_POST['ship1_quantity'] : 1;
 $ship2Id = isset($_POST['ship2_id']) ? $_POST['ship2_id'] : null;
 $ship2Quantity = isset($_POST['ship2_quantity']) ? $_POST['ship2_quantity'] : 1;
 
-$ship1 = $shipLoader->findOneById($ship1Id);
-$ship2 = $shipLoader->findOneById($ship2Id);
+
 
 // if no ship name is entered, die.
 if (!$ship1Id || !$ship2Id) {
     header('Location: /index.php?error=missing_data');
     die;
 }
+
+$ship1 = $shipLoader->findOneById($ship1Id);
+$ship2 = $shipLoader->findOneById($ship2Id);
+
+
 // if ship name is not in array? die.
 if (!isset($ships[$ship1Id]) || !isset($ships[$ship2Id])) {
     header('Location: /index.php?error=bad_ships');

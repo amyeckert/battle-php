@@ -66,7 +66,7 @@ if (isset($_GET['error'])) {
                 </thead>
                 <tbody>
                     <?php foreach ($ships as $ship): ?>
-                        <tr>
+                        <tr> 
                             <td><?php echo $ship->getName(); ?></td>
                             <td><?php echo $ship->getWeaponPower(); ?></td>
                             <td><?php echo $ship->getJediFactor(); ?></td>
@@ -87,19 +87,27 @@ if (isset($_GET['error'])) {
                 <div>
                     <form method="POST" action="/battle.php"> <!--run the action in this file-->
                         <h2 class="text-center">The Mission</h2>
+
                         <input class="center-block form-control text-field" type="text" name="ship1_quantity" placeholder="Enter Number of Ships" />
+
                         <select class="center-block form-control btn drp-dwn-width btn-default btn-lg dropdown-toggle" name="ship1_id">
                             <option value="">Choose a Ship</option>
+
+
+
+
                             <?php foreach ($ships as $ship): ?>
                                 <?php if ($ship->isFunctional()): ?>
-                                    <option value="<?php echo $ship->getId(); ?>"<?php echo $ship->getNameAndSpecs(); ?></option>
+                                    <option value="<?php echo $ship->getId(); ?>"><?php echo $ship->getName(); ?></option>
                                 <?php endif; ?>
                             <?php endforeach; ?>
+
                         </select>
                         <br>
                         <p class="text-center">AGAINST</p>
                         <br>
                         <input class="center-block form-control text-field" type="text" name="ship2_quantity" placeholder="Enter Number of Ships" />
+
                         <select class="center-block form-control btn drp-dwn-width btn-default btn-lg dropdown-toggle" name="ship2_id">
                             <option value="">Choose a Ship</option>
                             <?php foreach ($ships as $ship): ?> <!--create a variable that contains these key/value pairs-->
